@@ -1,0 +1,9 @@
+node_modules
+vendor
+public/js
+.env
+.env.example
+.env.testing
+storage/*.key
+public/storage
+public/hot
