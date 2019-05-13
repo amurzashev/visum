@@ -45,7 +45,7 @@ const Ratings = (props) => {
   return (
     <ul className={css(defaultStyles.commentsWrap)}>
       {ratings.map(rating => (
-        <li key={rating.id} className={css(defaultStyles.comment)}>
+        <li key={`${rating.updated_at}${rating.comment}`} className={css(defaultStyles.comment)}>
           <div className={css(defaultStyles.div1, theme.mode === 'dark' ? defaultStyles.div1Dark : defaultStyles.div1Light)}>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               {renderStars(rating.rating)}

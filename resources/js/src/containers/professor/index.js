@@ -19,8 +19,10 @@ class Professor extends Component {
   }
 
   componentDidMount = () => {
-    const { match, actionFetchProfessorInfo } = this.props;
-    actionFetchProfessorInfo(match.params.id);
+    const { match, actionFetchProfessorInfo, professor } = this.props;
+    if (String(professor.info.id) !== String(match.params.id)) {
+      actionFetchProfessorInfo(match.params.id);
+    }
   }
 
   renderProfessorPage = () => {
