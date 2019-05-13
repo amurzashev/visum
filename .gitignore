@@ -2,6 +2,7 @@ node_modules
 vendor
 public/js
 public/css
+public/fonts
 .env
 .env.example
 .env.testing

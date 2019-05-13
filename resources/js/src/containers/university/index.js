@@ -25,8 +25,10 @@ class University extends Component {
   }
 
   componentDidMount = () => {
-    const { match, actionFetchUniversityInfo } = this.props;
-    actionFetchUniversityInfo(match.params.id);
+    const { match, actionFetchUniversityInfo, university } = this.props;
+    if (String(university.info.id) !== String(match.params.id)) {
+      actionFetchUniversityInfo(match.params.id);
+    }
     window.addEventListener('resize', this.handleWindowWidth);
   }
 
