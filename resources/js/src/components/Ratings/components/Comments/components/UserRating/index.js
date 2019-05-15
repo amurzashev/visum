@@ -56,7 +56,6 @@ const UserRating = (props) => {
       ...rating,
       entity
     };
-    console.log(data);
     return (
       <input
         type="submit"
