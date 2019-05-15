@@ -28,7 +28,7 @@ class UniversityController extends Controller
                 get()->toArray();
         } else {
             $user_rating = Rating::
-            select('uuid', 'rating', 'comment', 'updated_at', 'created_at')->
+            select('entity_id', 'uuid', 'rating', 'comment', 'updated_at', 'created_at')->
             where('entity', 0)->
             where('entity_id', $university_id)
             ->where('uuid', $user->uuid)

@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-expressions */
 import React from 'react';
 import IosStar from 'react-ionicons/lib/IosStar';
 import IosStarOutline from 'react-ionicons/lib/IosStarOutline';
@@ -49,10 +51,21 @@ const UserRating = (props) => {
     entity,
     theme
   } = props;
-  const renderEdit = () => (
-    // eslint-disable-next-line no-unused-expressions
-    <input type="submit" value="Удалить" className={css(styles.more)} onClick={() => { entity === 'professor' ? actionDeleteProfessorRating(rating) : actionDeleteUniversityRating(rating); }} />
-  );
+  const renderEdit = () => {
+    const data = {
+      ...rating,
+      entity
+    };
+    console.log(data);
+    return (
+      <input
+        type="submit"
+        value="Удалить"
+        className={css(styles.more)}
+        onClick={() => { entity === 1 ? actionDeleteProfessorRating(data) : actionDeleteUniversityRating(data); }}
+      />
+    );
+  };
   const renderOverlay = () => (
     <div className={css(styles.loadingOverlay)}>
       <div className={css(styles.loadingOverlayDiv)}>
