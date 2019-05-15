@@ -32,16 +32,16 @@ class ProfessorController extends Controller
                 get()->toArray();
         } else {
             $user_rating = Rating::
-            select('user_id', 'rating', 'comment', 'updated_at', 'created_at')->
+            select('uuid', 'rating', 'comment', 'updated_at', 'created_at')->
             where('entity', 1)->
             where('entity_id', $professor_id)->
-            where('user_id', $user->uuid)->
+            where('uuid', $user->uuid)->
             first();
             $ratings = Rating::
                 select('rating', 'comment', 'updated_at', 'created_at')->
                 where('entity_id', $professor_id)->
                 where('entity', 1)->
-                where('user_id', '!=', $user->uuid)->
+                where('uuid', '!=', $user->uuid)->
                 orderBy('updated_at', 'desc')->
                 get()->toArray();
         }

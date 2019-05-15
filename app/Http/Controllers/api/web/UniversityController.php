@@ -28,16 +28,16 @@ class UniversityController extends Controller
                 get()->toArray();
         } else {
             $user_rating = Rating::
-            select('user_id', 'rating', 'comment', 'updated_at', 'created_at')->
+            select('uuid', 'rating', 'comment', 'updated_at', 'created_at')->
             where('entity', 0)->
             where('entity_id', $university_id)
-            ->where('user_id', $user->uuid)
+            ->where('uuid', $user->uuid)
             ->first();
             $ratings = Rating::
                 select('rating', 'comment', 'updated_at', 'created_at')->
                 where('entity', 0)->
                 where('entity_id', $university_id)->
-                where('user_id', '!=', $user->uuid)->
+                where('uuid', '!=', $user->uuid)->
                 orderBy('updated_at', 'desc')->
                 get()->toArray();
         }

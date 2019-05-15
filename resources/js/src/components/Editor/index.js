@@ -20,7 +20,7 @@ class Editor extends Component {
     professor: PropTypes.object.isRequired,
     account: PropTypes.object.isRequired,
     type: PropTypes.oneOf(['new', 'edit']).isRequired,
-    entity: PropTypes.oneOf(['professor', 'university']).isRequired,
+    entity: PropTypes.oneOf([0, 1]).isRequired,
     theme: PropTypes.object.isRequired
   }
 
@@ -91,7 +91,7 @@ class Editor extends Component {
     }
     if (value.length >= 10 && stars > 0) {
       let rating = {
-        user_id: account.id,
+        uuid: account.id,
         rating: stars,
         comment: value,
         entity
