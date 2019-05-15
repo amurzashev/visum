@@ -89,7 +89,7 @@ UserRating.propTypes = {
   isLoadingUni: PropTypes.bool.isRequired,
   actionDeleteUniversityRating: PropTypes.func.isRequired,
   actionDeleteProfessorRating: PropTypes.func.isRequired,
-  entity: PropTypes.oneOf(['professor', 'university']).isRequired,
+  entity: PropTypes.oneOf([1, 0]).isRequired,
   theme: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({

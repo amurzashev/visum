@@ -5,6 +5,6 @@ const handleHasAnyRatings = (ratings) => {
   return false;
 };
 
-const handleDidComment = (accountID, ratings) => ratings.some(el => el.user_id === accountID);
+const handleDidComment = (accountID, ratings) => ratings.some(el => el.uuid === accountID);
 
 export { handleHasAnyRatings, handleDidComment };
