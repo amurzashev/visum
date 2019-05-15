@@ -47,7 +47,7 @@ class Ratings extends Component {
     const { entity, theme } = this.props;
     const { isVisible } = this.state;
     return (
-      <div className={`card_padding ${css(styles.wrap)} ${entity === 'university' ? 'card_no_max' : 'card'}`}>
+      <div className={`card_padding ${css(styles.wrap)} ${entity === 0 ? 'card_no_max' : 'card'}`}>
         <div className={css(styles.infoWrap)} ref={(node) => { this.handleNode(node); }}>
           <h3>Комментарии</h3>
           <IosInformationCircleOutline onClick={() => { this.handleClick(); }} className={css(styles.icon)} color={theme.mode === 'dark' ? 'white' : 'black'} />

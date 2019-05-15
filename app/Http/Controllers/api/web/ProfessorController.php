@@ -32,7 +32,7 @@ class ProfessorController extends Controller
                 get()->toArray();
         } else {
             $user_rating = Rating::
-            select('uuid', 'rating', 'comment', 'updated_at', 'created_at')->
+            select('entity_id', 'uuid', 'rating', 'comment', 'updated_at', 'created_at')->
             where('entity', 1)->
             where('entity_id', $professor_id)->
             where('uuid', $user->uuid)->

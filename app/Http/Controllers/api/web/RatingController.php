@@ -31,7 +31,7 @@ class RatingController extends Controller
     $dataValidator = $this->validateData($request);
     if($dataValidator->fails()){
       return response()->json(['status' => 'bad business, hombre'], 422);
-    } else{
+    } else {
       $userValidator = $this->validateUser($request->uuid);
       if(!$userValidator) {
         return response()->json(['status' => 'bad user'], 400);
@@ -40,6 +40,26 @@ class RatingController extends Controller
           ['entity' => $request->entity,'entity_id' => $request->entity_id, 'uuid' => $request->uuid],
           ['rating' => $request->rating, 'comment' => $request->comment]
         );
+        return response()->json(['status' => 'success'], 200);
+      }
+    }
+  }
+  public function delete(Request $request) {
+    $dataValidator = $this->validateData($request);
+    if ($dataValidator->fails()) {
+      return response()->json(['status' => 'bad business, hombre'], 422);
+    } else {
+      $userValidator = $this->validateUser($request->uuid);
+      if(!$userValidator) {
+        return response()->json(['status' => 'bad user'], 400);
+      } else {
+        Rating::where(
+          [
+            'entity' => $request->entity,
+            'entity_id' => $request->entity_id,
+            'uuid' => $request->uuid
+          ]
+        )->delete();
         return response()->json(['status' => 'success'], 200);
       }
     }
