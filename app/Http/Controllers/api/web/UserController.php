@@ -111,7 +111,7 @@ class UserController extends Controller
     }
     public function checkToken(Request $request)
     {
-        $user = User::where('token', $request->token)->first();
+        $user = User::select('token', 'uuid')->where('token', $request->token)->first();
         if (!$user) {
             return response()->json(['status'=>'incorrect token'], 403);
         }
