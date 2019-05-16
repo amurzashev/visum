@@ -30,7 +30,7 @@ Route::delete('/web/v1/professor', 'api\web\RatingController@delete'); // delete
 
 //Users
 Route::post('/web/v1/user', 'api\web\UserController@create')->middleware('throttle:5,5'); // -> authorization logic here
-Route::post('/web/v1/user/code', 'api\web\UserController@verifySms'); // -> verify sms code
+Route::post('/web/v1/user/code', 'api\web\UserController@verifySms')->middleware('throttle:5,5'); // -> verify sms code
 // check if user token exists in db
 Route::post('/web/v1/user/token', 'api\web\UserController@checkToken');
 
