@@ -12,22 +12,18 @@ use ReallySimpleJWT\Token;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-/*
-    WEB API
-*/
-
 
 //Universities
 Route::get('/web/v1/university', 'api\web\UniversityController@index');
 Route::get('/web/v1/university/{university_id}', 'api\web\UniversityController@getUniversity');
-//University Rating
-Route::post('/web/v1/university', 'api\web\RatingController@store')->middleware('throttle:2,0.1'); // update or insert rating
-Route::delete('/web/v1/university', 'api\web\RatingController@delete'); // delete rating
 
 //Professors
 Route::get('/web/v1/professor', 'api\web\ProfessorController@index');
 Route::get('/web/v1/professor/{professor_id}', 'api\web\ProfessorController@getProfessor');
 
+//University Rating
+Route::post('/web/v1/university', 'api\web\RatingController@store')->middleware('throttle:2,0.1'); // update or insert rating
+Route::delete('/web/v1/university', 'api\web\RatingController@delete'); // delete rating
 //Professor Rating
 Route::post('/web/v1/professor', 'api\web\RatingController@store')->middleware('throttle:2,0.1'); // update or insert rating
 Route::delete('/web/v1/professor', 'api\web\RatingController@delete'); // delete rating
