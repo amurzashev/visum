@@ -20,7 +20,8 @@ class ProfessorController extends Controller
     public function getProfessorRatings($professor_id)
     {
         $user_token = Cookie::get('token');
-        $user = User::where('token', $user_token)->first();
+        // $user = User::where('token', $user_token)->first();
+        $user = null;
         $ratings = null;
         $user_rating = null;
         if($user == null) {
@@ -61,10 +62,5 @@ class ProfessorController extends Controller
         $ratings = $this->getProfessorRatings($professor_id);
         $professor->university = $university;
         return response()->json(['info'=>$professor, 'ratings'=>$ratings]);
-    }
-    public function autoSuggestProfessor($professor_name)
-    {
-        $professors = Professor::where('name', 'like', '%'.$professor_name.'%')->get();
-        return response()->json(['professors'=>$professors]);
     }
 }

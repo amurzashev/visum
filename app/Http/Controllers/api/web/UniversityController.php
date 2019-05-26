@@ -16,7 +16,8 @@ class UniversityController extends Controller
     public function getUniversityRatings($university_id)
     {
         $user_token = Cookie::get('token');
-        $user = User::where('token', $user_token)->first();
+        // $user = User::where('token', $user_token)->first();
+        $user = null;
         $ratings = null;
         $user_rating = null;
         if($user == null) {

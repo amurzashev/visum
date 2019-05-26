@@ -9,14 +9,8 @@ use App\University;
 
 class CityController extends Controller
 {
-    public function index()
-    {
-        $cities = City::get();
-        return response()->json(['cities'=>$cities]);
-    }
     public function getAll()
     {
-        // TODO: how to safely remove university from array after it was assigned to a city?
         $universities = University::get();
         $cities = City::get();
         foreach($cities as $city) {

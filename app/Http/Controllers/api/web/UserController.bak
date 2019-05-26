@@ -1,0 +1,144 @@
+<?php
+
+namespace App\Http\Controllers\api\web;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use App\User;
+use App\Token;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+use \Firebase\JWT\JWT;
+
+class UserController extends Controller
+{
+    public function create(Request $request)
+    {
+        $phone_number = $request->phone;
+        $isPhoneNumberCorrect = $this->checkPhoneNumber($phone_number);
+        if($isPhoneNumberCorrect){
+            return $this->sendSmsCode($phone_number);
+        }
+        return response()->json(['status_code'=>1, 'phone'=> $phone_number], 403);
+    }
+    public function randomString($length)
+    {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    public function sendSmsCode($phone_number)
+    {
+        $client = new Client();
+        $mobizonToken = config('app.mobizonAPI');
+        $code = $this->randomString(6);
+        $mobizonMessage = urlencode('Код: '.$code.' Активация VISUM ');
+        if (App::environment(['local', 'staging'])) {
+            $fakeSms = true;
+            if($fakeSms){
+                $doesUserExist = $this->doesUserExist($phone_number);
+                if($doesUserExist){
+                    return $this->updateUserSms($phone_number, $code);
+                } else {
+                    return $this->createNewUser($phone_number, $code);
+                }
+            }else{
+                return response()->json(['status_code'=>2], 403);
+            }
+        } else {
+        $response = $client->get(
+            'https://api.mobizon.kz/service/message/sendsmsmessage?recipient='
+            .$phone_number.'&text='.$mobizonMessage.'&apiKey='.$mobizonToken
+        );
+        $responseAnswer = json_decode($response->getBody());
+        }
+        if($responseAnswer->code == 0){
+            $doesUserExist = $this->doesUserExist($phone_number);
+            if($doesUserExist){
+                return $this->updateUserSms($phone_number, $code);
+            } else {
+                return $this->createNewUser($phone_number, $code);
+            }
+        }else{
+            return response()->json(['status_code'=>2], 403);
+        }
+    }
+    public function checkPhoneNumber($phone_number)
+    {
+        $isAllNumeric = ctype_digit($phone_number);
+        return substr($phone_number, 0,2) == '77' && strlen($phone_number) == 11 && $isAllNumeric;
+    }
+    public function doesUserExist($phone_number)
+    {
+        $phone_number_with_plus = '+'.$phone_number;
+        $user = User::where('phone', $phone_number_with_plus)->exists();
+        return $user;
+    }
+    public function createNewUser($phone_number, $code)
+    {
+        $key = config('app.uuid');
+        $user = new User;
+        $uuid = Hash::make($phone_number.$key);
+        $user->sms = $code;
+        $user->save();
+        return response()->json(['status_message'=> 'user created'], 200);
+    }
+    public function updateUserSms($phone_number, $code)
+    {
+        $phone_number_with_plus = '+'.$phone_number;
+        $user = User::where('phone', $phone_number_with_plus)->update(['sms'=>$code]);
+        return response()->json(['status_message' => 'user record updated'], 200);
+    }
+    public function checkToken(Request $request)
+    {
+        $tokenKey = config('app.tokenKey');
+        $rawToken = Token::select('token', 'uuid')->where('token', $request->token)->first();
+        $decoded = null;
+        if (!$rawToken) {
+            return response()->json(['status'=>'incorrect token'], 403);
+        }
+        try {
+            $decoded = JWT::decode($rawToken->token, $tokenKey, array('HS256'));
+            return response()->json(['status'=>'wusup foo'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'incorrect token'], 403);            
+        }
+    }
+    public function verifySms(Request $request)
+    {
+        $phone_number_with_plus = '+'.$request->phone;
+        $user = User::where('sms', $request->code)->where('phone', $phone_number_with_plus)->first();
+        if(!$user){
+            return response()->json(['status_message'=>'record not found'], 403);
+        }
+        try {
+            return $this->generateToken($user);
+        } catch(\Exception $e) {
+            return response()->json(['status_message'=>'something went wrong'], 500);
+        }
+    }
+    public function generateToken($user)
+    {
+        $iat = time();
+        $tokenKey = config('app.tokenKey');
+        $token = [
+            "iat" => $iat,
+            "exp" => $iat + (7 * 24 * 60 * 60 * 1000),
+            "uuid" => $uuid
+        ];
+        $jwt = JWT::encode($token, $tokenKey);
+        $newToken = new Token;
+        $newToken->token = $jwt;
+        $newToken->uuid = $uuid;
+        $newToken->save();
+        User::where('phone', $user->phone)->update(['uuid' => $uuid]);
+        return response()->json(['token' => $jwt], 200);
+    }
+}

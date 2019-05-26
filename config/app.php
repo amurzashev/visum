@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'mobizonAPI' => env('APP_MOBIZON_API_KEY', 'NO_MOBIZON_API_KEY'),
+    'uuid' => env('APP_UUID', null),
+    'tokenKey' => env('APP_TOKEN_KEY', null),
     /*
     |--------------------------------------------------------------------------
     | Application Environment

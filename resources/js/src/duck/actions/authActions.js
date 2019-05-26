@@ -52,7 +52,8 @@ const registerUser = (phone, code, history, lastLocation) => (
           token: response.data.token,
           id: response.data.id
         };
-        Cookies.set('token', response.data.token, { expires: 30 });
+        console.log(response);
+        Cookies.set('token', response.data.token, { expires: 7 });
         dispatch({
           type: AXIOS_CODE_SUCCESS
         });
