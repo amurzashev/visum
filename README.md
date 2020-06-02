@@ -1,5 +1,5 @@
 # VISUM Laravel+React Web Project👾
-# OLD PROJECT SAVED FOR IT'S HISTORIC VALUE ONLY
+# OLD PROJECT SAVED FOR IT'S HISTORIC VALUE
 ## Contains a bunch of 🍝🍝🍝
 Listen here fuckers, this is a perfect opportunity for you to pimp your resumés. This here is a web app for [visum](https://visum.kz) written in PHP(don't like it? fuck off, dipshit) using [Laravel](https://laravel.com) and [React](https://reactjs.org).
 # Tech stack
