@@ -1,7 +1,7 @@
 # VISUM Laravel+React Web Project👾
 # OLD PROJECT SAVED FOR IT'S HISTORIC VALUE
 ## Contains a bunch of 🍝🍝🍝
-Listen here fuckers, this is a perfect opportunity for you to pimp your resumés. This here is a web app for [visum](https://visum.kz) written in PHP(don't like it? fuck off, dipshit) using [Laravel](https://laravel.com) and [React](https://reactjs.org).
+Listen here ya dingles, this is a perfect opportunity for you to pimp your resumés. This here is a web app for [visum](https://visum.kz) written in PHP(don't like it? fuck off, dipshit) using [Laravel](https://laravel.com) and [React](https://reactjs.org).
 # Tech stack
 1. Laravel
 2. React
@@ -13,19 +13,19 @@ Listen here fuckers, this is a perfect opportunity for you to pimp your resumés
 5. [MySQL](https://www.mysql.com/)
 6. [PHP](http://php.net/downloads.php)
 # First time running the app
-1. Fork this shit, you stoopid
+1. Fork this 💩, you stoopid
 2. Create empty .env file in root
 3. `php artisan key:generate`
-4. Run fucking mysql and import example DB(ask for example db on vk, telegram)
+4. Run da mysql and import example DB
 5. `composer install`
 6. `npm i`
 7. open two consoles and run following to run the server
 8. `php artisan serve`
 9. `npm run watch`
 10. `npm run storybook` - to run 'app documentation'
-11. fucking enjoy your app on 127.0.0.1:8000
+11. enjoy your app on 127.0.0.1:8000
 # How to contribute
-Create separate branch you asshole, and work on whatever you wish to work on.
+Create separate branch and work on whatever you wish to work on.
 # "Maybe you should know this shit before doing anything" list
 1. [Laravel](https://laravel.com/docs/5.7/installation)
 2. [React](https://reactjs.org/docs/getting-started.html)
